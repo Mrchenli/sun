@@ -1,0 +1,49 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
+    <!--工作流引擎配置-->
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <!--数据源-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--spring管理事务-->
+        <property name="transactionManager" ref="transactionManager"/>
+        <!--数据策略-->
+        <property name="databaseSchemaUpdate" value="true"/>
+        <!--activiti的定时任务关闭-->
+        <property name="jobExecutorActivate" value="false"/>
+    </bean>
+
+    <!--流程引擎-->
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+    </bean>
+
+    <!--资源服务service-->
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"></bean>
+
+    <!--流程运行service-->
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"></bean>
+
+    <!--任务管理-->
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"></bean>
+
+    <!--历史管理-->
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"></bean>
+
+    <!--用户管理-->
+    <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"></bean>
+
+    <!--引擎管理-->
+    <bean id="managementService" factory-method="getManagementService" factory-bean="processEngine"></bean>
+</beans>

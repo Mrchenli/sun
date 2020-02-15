@@ -1,0 +1,19 @@
+table,tr,td,th{
+    border:1px black solid;
+    border-collapse: collapse;
+}
+
+a{
+    color: blue;
+    text-decoration: none;
+}
+
+A:hover{
+    color: red;
+    text-decoration: none;
+
+}
+
+body{
+    margin: 0px;
+}
