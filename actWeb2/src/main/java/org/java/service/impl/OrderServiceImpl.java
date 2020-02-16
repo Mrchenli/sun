@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         ProcessInstance Instance = runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey,variables);
 
         /**向采购表添加记录**/
-        map.put("id",businessKey);//业务表主键
+        map.put("id",businessKey);//业务表主键 使用uuid
         map.put("createTime",new Date());//采购单创建时间
         map.put("processInstanceId",Instance.getProcessInstanceId());//采购单所属实例ID
 
